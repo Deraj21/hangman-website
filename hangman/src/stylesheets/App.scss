@@ -1,0 +1,10 @@
+@import 'reset';
+
+.App {
+  background-color: lightblue;
+}
+
+@import 'Login';
+@import 'Main';
+@import 'Profile';
+@import 'Game';
