@@ -54,6 +54,35 @@ table {
 
 .App {
   background-color: lightblue;
+  font-family: sans-serif;
+  font-size: 16px;
+}
+.App h1 {
+  font-size: 40px;
+}
+.App h2 {
+  font-size: 30px;
+}
+.App h3 {
+  font-size: 20px;
+}
+.App table {
+  table-layout: fixed;
+  width: 500px;
+  margin: 10px;
+  padding: 10px;
+  border-collapse: collapse;
+}
+.App table > :nth-child(1) {
+  font-style: italic;
+}
+.App td {
+  border: 1px solid gray;
+  padding: 5px;
+}
+.App .bottom-button {
+  display: flex;
+  justify-content: center;
 }
 
 .Login .portal {
@@ -78,7 +107,6 @@ table {
   align-items: center;
 }
 .Main .top h1 {
-  font-size: 30px;
   text-align: center;
 }
 .Main .top .profile-box {
@@ -93,19 +121,49 @@ table {
   flex-direction: column;
   justify-content: space-between;
 }
-.Main .scores table {
-  table-layout: fixed;
-  width: 500px;
+
+.Profile .top {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+.Profile .top img {
+  height: 100px;
+  width: 100px;
   margin: 10px;
-  padding: 10px;
-  border-collapse: collapse;
 }
-.Main .scores table > :nth-child(1) {
-  font-style: italic;
+.Profile .top h1 {
+  margin-left: 20px;
 }
-.Main .scores td {
-  border: 1px solid black;
-  padding: 5px;
+
+.Game .window {
+  margin: auto;
+  height: 300px;
+  width: 600px;
+  background-color: lightgray;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+}
+.Game .window img {
+  height: 250px;
+}
+.Game .window .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+.Game .window .right .board {
+  letter-spacing: 5px;
+  font-size: 20px;
+  font-family: "Courier New", Courier, monospace;
+}
+.Game .window .right .guessed {
+  font-family: "Courier New", Courier, monospace;
+  line-height: 25px;
 }
 
 /*# sourceMappingURL=style.css.map */

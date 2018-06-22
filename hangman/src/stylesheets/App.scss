@@ -2,6 +2,42 @@
 
 .App {
   background-color: lightblue;
+  font-family: sans-serif;
+  font-size: 16px;
+
+  h1 {
+    font-size: 40px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  table {
+    table-layout: fixed;
+    width: 500px;
+    margin: 10px;
+    padding: 10px;
+    border-collapse: collapse;
+    > :nth-child(1) {
+      font-style: italic;
+    }
+  }
+
+  td {
+    border: 1px solid gray;
+    padding: 5px;
+  }
+
+  .bottom-button {
+    display: flex;
+    justify-content: center;
+  }
+
 }
 
 @import 'Login';

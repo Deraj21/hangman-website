@@ -64,7 +64,7 @@ export default class Main extends Component {
     return (
       <div className="Main">
         <div className="top">
-          <h1>HangGame!</h1>
+          <h1>Hang-Game!</h1>
           <div className="profile-box">
             <img src={`https://robohash.org/${first_name}${last_name}?set=set4`} alt="profile pic"/>
             <div className="links">
@@ -85,7 +85,7 @@ export default class Main extends Component {
             { scores }
           </table>
         </div>
-        <div className="new-game">
+        <div className="bottom-button">
           <Link to="/game"><button>Start New Game</button></Link>
         </div>
 

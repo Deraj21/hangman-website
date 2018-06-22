@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 // first_name, last_name, user_id, is_admin
 let user = {
@@ -24,7 +25,10 @@ export default class Profile extends Component {
 
     return (
       <div className="Profile">
-        <h1>{`${first_name} ${last_name}`}</h1>
+        <div className="top">
+          <img src={`https://robohash.org/${first_name}${last_name}?set=set4`} alt="profile pic"/>
+          <h1>{`${first_name} ${last_name}`}</h1>
+        </div>
         <table>
           <tr>
             <td>Score</td>
@@ -39,6 +43,9 @@ export default class Profile extends Component {
             <td>{games_played}</td>
           </tr>
         </table>
+        <div className="bottom-button">
+          <Link to="/main"><button>back</button></Link>
+        </div>
       </div>
     );
   }
