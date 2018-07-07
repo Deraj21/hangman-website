@@ -1,55 +1,39 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-const scoreData = [
-  {
-    score: 100,
-    first_name: 'Rachel',
-    last_name: 'Tanner'
-  },
-  {
-    score: 98,
-    first_name: 'Kalina',
-    last_name: 'Tanner'
-  },
-  {
-    score: 45,
-    first_name: 'Holland',
-    last_name: 'Tanner'
-  },
-  {
-    score: 30,
-    first_name: 'Chalane',
-    last_name: 'Tanner'
-  },
-  {
-    score: 10,
-    first_name: 'Jeffrey',
-    last_name: 'Tanner'
-  }
-];
-
-// first_name, last_name, user_id, is_admin
-let user = {
-  first_name: 'Jared',
-  last_name: 'Tanner',
-  user_id: 1,
-  is_admin: true
-}
-
-// user_id, total_score, word_score, games_played
-let user_score = {
-  user_id: 1,
-  total_score: 95,
-  word_score: 9.5,
-  games_played: 10
-}
+import Axios from 'axios';
 
 export default class Main extends Component {
+  constructor(){
+    super();
+
+    this.state = {
+      topScores: [],
+      currentUser: {},
+    }
+
+  }
+
+  componentDidMount(){
+    Axios.get('/api/user')
+      .then( response => {
+        console.log(response.data);
+        this.setState({ currentUser: response.data });
+      } )
+      .catch( err => console.log(`Axios err: ${err.message}`) );
+
+    Axios.get('/api/topscores/10')
+      .then( response => {
+        this.setState({ topScores: response.data });
+      })
+      .catch(err => console.log(`Axios err: ${err.message}`) );
+
+  }
   
   render() {
 
-    let scores = scoreData.map((item, i) => {
+    let {topScores, currentUser } = this.state;
+
+    let scores = topScores.map((item, i) => {
       return (
         <tr key={`row-${i}`}>
           <td>{i}</td>
@@ -59,12 +43,12 @@ export default class Main extends Component {
       )
     });
     
-    let { first_name, last_name, user_id, is_admin } = user;
+    let { first_name, last_name, user_id, is_admin } = currentUser;
 
     return (
       <div className="Main">
         <div className="top">
-          <h1>Hang-Game!</h1>
+          <h1>Impossible Hangman!</h1>
           <div className="profile-box">
             <img src={`https://robohash.org/${first_name}${last_name}?set=set4`} alt="profile pic"/>
             <div className="links">
