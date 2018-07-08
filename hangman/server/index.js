@@ -26,10 +26,29 @@ passport.use( module.exports = new Auth0Strategy({
   scope: 'openid email profile'
   },
   function(accessToken, refreshToken, extraParams, profile, done) {
-    // accessToken is the token to call Auth0 API (not needed in the most cases)
-    // extraParams.id_token has the JSON Web Token
-    // profile has all the information from the user
-    return done(null, profile);
+    const db = app.get('db');
+    let { id, name, nickname } = profile;
+    db.get_user(id)
+      .then( user => {
+        if (user[0]){
+          return done(null, profile);
+        } else {
+          console.log('making new user');
+          if (!name.givenName) {
+            givenName = nickname;
+          }
+          if (!name.familyName) {
+            familyName = '';
+          }
+                    // id, first_name,     last_name,       is_admin
+          db.add_user([id, name.givenName, name.familyName, false])
+            .then( respose => {
+              return done(null, profile);
+            } )
+            .catch( err => `db err: ${err.message}`);
+        }
+      })
+      .catch( err => console.log(`db err: ${err.message}`));
   }
 ) );
 
@@ -54,15 +73,16 @@ massive(CONNECTION_STRING)
   });
 
 // user
-app.get('/api/user', controller.get_user);
+app.get('/api/currentUser', controller.get_current_user);
+app.get('/api/user/:id', controller.get_user);
 app.post('/api/user', controller.add_user);
 
 // topscores
 app.get('/api/topscores/:quantity', controller.get_top_scores);
 
 // score
-app.get('/api/score/:id', controller.get_score);
-app.put('/api/score/:id', controller.update_score);
+app.get('/api/score', controller.get_score);
+app.put('/api/score', controller.update_score);
 app.delete('/api/score/:id', controller.delete_score);
 
 // login

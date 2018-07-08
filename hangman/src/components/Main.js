@@ -8,15 +8,21 @@ export default class Main extends Component {
 
     this.state = {
       topScores: [],
-      currentUser: {},
+      currentUser: {
+        name: {
+          givenName: '',
+          familyName: ''
+        },
+        id: '',
+        nickname: ''
+      }
     }
 
   }
 
   componentDidMount(){
-    Axios.get('/api/user')
+    Axios.get('/api/currentUser')
       .then( response => {
-        console.log(response.data);
         this.setState({ currentUser: response.data });
       } )
       .catch( err => console.log(`Axios err: ${err.message}`) );
@@ -31,29 +37,38 @@ export default class Main extends Component {
   
   render() {
 
-    let {topScores, currentUser } = this.state;
+    let { topScores, currentUser } = this.state;
 
     let scores = topScores.map((item, i) => {
+      let { total_score, word_score, first_name, last_name } = item;
       return (
-        <tr key={`row-${i}`}>
-          <td>{i}</td>
-          <td>{item.score}</td>
-          <td>{`${item.first_name} ${item.last_name}`}</td>
+        <tr key={`row-${i+1}`}>
+          <td>{i+1}</td>
+          <td>{total_score}</td>
+          <td>{`${first_name} ${last_name}`}</td>
         </tr>
       )
     });
     
-    let { first_name, last_name, user_id, is_admin } = currentUser;
+    let { id, name, nickname } = currentUser;
+    let { givenName, familyName } = name;
+    if (!givenName) {
+      givenName = nickname;
+    }
+    if (!familyName) {
+      familyName = '';
+    }
+    
 
     return (
       <div className="Main">
         <div className="top">
           <h1>Impossible Hangman!</h1>
           <div className="profile-box">
-            <img src={`https://robohash.org/${first_name}${last_name}?set=set4`} alt="profile pic"/>
+            <img src={`https://robohash.org/${givenName}${familyName}?set=set4`} alt="profile pic"/>
             <div className="links">
-              <p>{`${first_name} ${last_name}`}</p>
-              <Link to={`/profile/${user_id}`}><p>View Profile</p></Link>
+              <p>{`${givenName} ${familyName}`}</p>
+              <Link to={`/profile/${id}`}><p>View Profile</p></Link>
               <Link to="/"><p>Logout</p></Link>
             </div>
           </div>
@@ -61,12 +76,14 @@ export default class Main extends Component {
         <div className="scores">
           <h2>Top Scores</h2>
           <table>
-            <tr>
-              <td>Place</td>
-              <td>Score</td>
-              <td>Name</td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>Place</td>
+                <td>Score</td>
+                <td>Name</td>
+              </tr>
             { scores }
+            </tbody>
           </table>
         </div>
         <div className="bottom-button">

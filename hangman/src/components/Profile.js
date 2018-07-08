@@ -1,37 +1,68 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-// first_name, last_name, user_id, is_admin
-let user = {
-  first_name: 'Jared',
-  last_name: 'Tanner',
-  user_id: 1,
-  is_admin: true
-}
-
-// user_id, total_score, word_score, games_played
-let user_score = {
-  user_id: 1,
-  total_score: 95,
-  word_score: 9.5,
-  games_played: 10
-}
+import Axios from 'axios';
 
 export default class Profile extends Component {
+  constructor(){
+    super();
+
+    this.state = {
+      currentUser: {
+        name: {
+          givenName: '',
+          familyName: ''
+        },
+        id: '',
+        nickname: ''
+      },
+      score: {
+        total_score: 0,
+        word_score: 0,
+        games_played: 0
+      }
+    }
+
+  }
+
+  componentDidMount(){
+    // get current user data
+    Axios.get('/api/currentUser')
+      .then( response => {
+        this.setState({ currentUser: response.data });
+      })
+      .catch( err => console.log(`axios err: ${err.message}`) );
+
+    // get score data
+    Axios.get('/api/score')
+      .then( response => {
+        this.setState({ score: response.data[0] })
+      } )
+      .catch( err => console.log(`axios err: ${err.message}`) );
+  }
   
   render() {
-    let { first_name, last_name, user_id, is_admin } = user;
-    let { total_score, word_score, games_played } = user_score;
+    //set up data
+    let { total_score, word_score, games_played } = this.state.score;
+    let { name, nickname } = this.state.currentUser;
+    let { givenName, familyName } = name;
+    if (!givenName) {
+      givenName = nickname;
+    }
+    if (!familyName) {
+      familyName = '';
+    }
+
 
     return (
       <div className="Profile">
         <div className="top">
-          <img src={`https://robohash.org/${first_name}${last_name}?set=set4`} alt="profile pic"/>
-          <h1>{`${first_name} ${last_name}`}</h1>
+          <img src={`https://robohash.org/${givenName}${familyName}?set=set4`} alt="profile pic"/>
+          <h1>{`${givenName} ${familyName}`}</h1>
         </div>
         <table>
+          <tbody>
           <tr>
-            <td>Score</td>
+            <td>Score per Word</td>
             <td>{word_score}</td>
           </tr>
           <tr>
@@ -42,6 +73,7 @@ export default class Profile extends Component {
             <td>Games Played</td>
             <td>{games_played}</td>
           </tr>
+          </tbody>
         </table>
         <div className="bottom-button">
           <Link to="/main"><button>back</button></Link>
