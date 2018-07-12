@@ -1,46 +1,40 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import Axios from 'axios';
+import { connect } from 'react-redux';
+import { updateCurrentUser, updateTopScores, updateScore } from '../ducks/reducer';
 
-export default class Main extends Component {
-  constructor(){
-    super();
-
-    this.state = {
-      topScores: [],
-      currentUser: {
-        name: {
-          givenName: '',
-          familyName: ''
-        },
-        id: '',
-        nickname: ''
-      }
-    }
-
-  }
+class Main extends Component {
 
   componentDidMount(){
+    // get currentUser
     Axios.get('/api/currentUser')
       .then( response => {
-        this.setState({ currentUser: response.data });
+        this.props.updateCurrentUser(response.data);
       } )
       .catch( err => console.log(`Axios err: ${err.message}`) );
 
+    // get topScores
     Axios.get('/api/topscores/10')
       .then( response => {
-        this.setState({ topScores: response.data });
+        this.props.updateTopScores(response.data);
       })
       .catch(err => console.log(`Axios err: ${err.message}`) );
-
+    
+    // get currenUserScore
+    Axios.get('api/score')
+      .then( response => {
+        this.props.updateScore(response.data[0]);
+      })
+      .catch( err => console.log(err.message));
   }
   
   render() {
-
-    let { topScores, currentUser } = this.state;
+    let { topScores, currentUser } = this.props;
 
     let scores = topScores.map((item, i) => {
-      let { total_score, word_score, first_name, last_name } = item;
+      let { total_score, word_score, games_played, first_name, last_name } = item;
       return (
         <tr key={`row-${i+1}`}>
           <td>{i+1}</td>
@@ -89,8 +83,16 @@ export default class Main extends Component {
         <div className="bottom-button">
           <Link to="/game"><button>Start New Game</button></Link>
         </div>
+        <div className="bottom-button"><button onClick={ () => console.log(this.props) }>Get props</button></div>
 
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  let { topScores, currentUser } = state;
+  return { topScores, currentUser };
+}
+
+export default withRouter(connect( mapStateToProps, { updateCurrentUser, updateTopScores, updateScore } )( Main ));

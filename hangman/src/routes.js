@@ -6,10 +6,10 @@ import Profile from './components/Profile';
 import Game from './components/Game';
 
 export default (
-  <Switch>
+  <div>
     <Route exact path="/" component={Login} />
     <Route path="/main" component={Main} />
     <Route path="/profile/:id" component={Profile} />
     <Route path="/game" component={Game} />
-  </Switch>
+  </div>
 )

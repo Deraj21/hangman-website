@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import './style.css';
 import routes from './routes';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 class App extends Component {
+
   render() {
     return (
       <div className="App">
@@ -12,4 +15,6 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateTopProps(state) { return state; }
+
+export default withRouter(connect( mapStateTopProps )( App ));

@@ -1,49 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Axios from 'axios';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 
-export default class Profile extends Component {
-  constructor(){
-    super();
-
-    this.state = {
-      currentUser: {
-        name: {
-          givenName: '',
-          familyName: ''
-        },
-        id: '',
-        nickname: ''
-      },
-      score: {
-        total_score: 0,
-        word_score: 0,
-        games_played: 0
-      }
-    }
-
-  }
-
-  componentDidMount(){
-    // get current user data
-    Axios.get('/api/currentUser')
-      .then( response => {
-        this.setState({ currentUser: response.data });
-      })
-      .catch( err => console.log(`axios err: ${err.message}`) );
-
-    // get score data
-    Axios.get('/api/score')
-      .then( response => {
-        this.setState({ score: response.data[0] })
-      } )
-      .catch( err => console.log(`axios err: ${err.message}`) );
-  }
+class Profile extends Component {
   
   render() {
     //set up data
-    let { total_score, word_score, games_played } = this.state.score;
-    let { name, nickname } = this.state.currentUser;
+    console.log(this.props);
+    let { total_score, word_score, games_played } = this.props.score;
+    let { name, nickname } = this.props.currentUser;
     let { givenName, familyName } = name;
     if (!givenName) {
       givenName = nickname;
@@ -82,3 +48,10 @@ export default class Profile extends Component {
     );
   }
 }
+
+function mapStateToProps(state){
+  let { score, currentUser } = state;
+  return { score, currentUser };
+}
+
+export default withRouter(connect( mapStateToProps )( Profile ));

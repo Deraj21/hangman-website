@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import Axios from 'axios';
+import { connect } from 'react-redux';
+import { updateScore } from '../ducks/reducer';
 
-const wordsConfig = {
-  baseURL: "https://wordsapiv1.p.mashape.com",
-  headers: {
-    "X-Mashape-Key":"2f0GdKnXKsmshUuilyDAgDCrKPHJp1878O1jsncmbHfvljrHmi"
-  }
-};
+// const wordsConfig = {
+//   baseURL: "https://wordsapiv1.p.mashape.com",
+//   headers: {
+//     "X-Mashape-Key":"2f0GdKnXKsmshUuilyDAgDCrKPHJp1878O1jsncmbHfvljrHmi"
+//   }
+// };
 
 const swapiConfig = {
   baseURL: "https://swapi.co"
@@ -22,7 +25,7 @@ const swapiCategories = [
   "planets"
 ];
 
-export default class Game extends Component {
+class Game extends Component {
   constructor(props){
     super(props);
 
@@ -33,15 +36,7 @@ export default class Game extends Component {
       guess: '',
       board: [],
       guessedLetters: [],
-      userWon: false,
-      currentUser: {
-        name: {
-          givenName: '',
-          familyName: ''
-        },
-        id: '',
-        nickname: ''
-      }
+      userWon: false
     }
 
     this.handleGuess = this.handleGuess.bind(this);
@@ -49,52 +44,8 @@ export default class Game extends Component {
 
   componentDidMount(){
     this.getWord();
-
-    Axios.get('/api/currentUser')
-      .then( response => {
-        this.setState({ currentUser: response.data });
-      })
-      .catch( err => console.log(`axios err: ${err.message}`) );
   }
-
-  randomFromList(array){
-    let rand = Math.floor(Math.random() * array.length);
-    return array[rand];
-  }
-
-  playerWon(){
-    // get definition
-    let { word, currentUser, guessedLetters } = this.state;
-    // Axios.get(`/words/${word}/definition`, wordsConfig)
-    //   .then( response => {
-    //     let { definition } = response.data;
-    //     this.setState({ definition: definition });
-    //   })
-    //   .catch( err => {
-    //     console.log(`Error: ${err.message}`);
-    //   });
-
-    // calculate new userScore
-    Axios.get('/api/score') // get old score
-      .then( response => {
-        // edit data
-        let newScore = Object.assign({}, response.data[0]);
-        let { total_score, word_score, games_played } = newScore;
-        games_played++;
-        // num letters in the word is added to total_score
-        total_score += word.length;
-        // num missed guesses is subtracted from total_score.
-        total_score -= guessedLetters.length;
-        word_score = total_score / games_played;
-
-        // send changes to database
-        Axios.put('/api/score', { total_score, word_score, games_played })
-          .then( console.log('score updated') )
-          .catch( err => console.log(`axios err: ${err.message}`) );
-        } )
-      .catch( err => console.log(`axios err: ${err.message}`) )
-  }
-
+  
   getWord(){
 
     let category = this.randomFromList(swapiCategories);
@@ -126,10 +77,33 @@ export default class Game extends Component {
     //   });
 
   }
+
+  randomFromList(array){
+    let rand = Math.floor(Math.random() * array.length);
+    return array[rand];
+  }
+
+  playerWon(){
+    let { word, guessedLetters } = this.state;
+
+    // calculate new userScore
+    console.log(this.props);
+    let newScore = Object.assign({}, this.props.score);
+    console.log("oldScore", newScore);
+    let { total_score, word_score, games_played } = newScore;
+    games_played++;
+    total_score += word.length;
+    total_score -= guessedLetters.length;
+    word_score = total_score / games_played;
+
+    // send changes to database
+    this.props.updateScore({ total_score, word_score, games_played });
+    console.log("newScore", this.props.score);
+  }
   
   makeBoard(word){
     return word.split('').map(letter => {
-      let nonLetters = `,.?'"; :-!`;
+      let nonLetters = `,.?'"; :-!0123456789`;
       if (nonLetters.indexOf(letter) !== -1) {
         return letter;
       }
@@ -205,3 +179,10 @@ export default class Game extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  let { score } = state;
+  return { score };
+}
+
+export default withRouter(connect( mapStateToProps, { updateScore } )( Game ));
