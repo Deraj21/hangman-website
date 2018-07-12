@@ -6,7 +6,7 @@ const Auth0Strategy = require('passport-auth0');
 const session = require('express-session');
 const controller = require('./controller');
 require('dotenv').config();
-let { SECRET, PORT, CONNECTION_STRING, DOMAIN, CLIENT_ID, CLIENT_SECRET } = process.env;
+let { SECRET, PORT, CONNECTION_STRING, DOMAIN, CLIENT_ID, CLIENT_SECRET, LOCAL_APP, HOSTED_APP } = process.env;
 
 const app = express();
 app.use(bodyParser.json());
@@ -86,7 +86,7 @@ app.put('/api/score', controller.update_score);
 app.delete('/api/score/:id', controller.delete_score);
 
 // login
-const config = { successRedirect: 'http://localhost:3000/#/main', failureRedirect: '/login', failureFlash: true };
+const config = { successRedirect: `${HOSTED_APP}/#/main`, failureRedirect: '/login', failureFlash: true };
 app.get('/login', passport.authenticate('auth0', config) );
 app.get('/me', (req, res, next) => {
   if (req.user) {
@@ -105,4 +105,4 @@ app.get('*', (req, res) => {
 
 const port = PORT || 4000;
 app.listen(port, () => console.log(`Server listening on port ${port}`));
-//  `http://localhost:4000/api`
+
