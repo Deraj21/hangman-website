@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+const HOST_SERVER="206.189.77.22";
+const LOCAL_SERVER="http://localhost";
 
 export default class Login extends Component {
   
@@ -7,10 +9,9 @@ export default class Login extends Component {
     return (
       <div className="Login">
         <div className="portal">
-          <button><a href="http://localhost:4000/login">Login</a></button>
+          <button><a href={`${HOST_SERVER}:4000/login`}>Login</a></button>
         </div>
       </div>
     );
   }
 }
-/* <a href="http://localhost:4000/login">Login</a> */
