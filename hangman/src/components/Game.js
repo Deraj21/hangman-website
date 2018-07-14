@@ -15,6 +15,9 @@ import { updateScore } from '../ducks/reducer';
 const swapiConfig = {
   baseURL: "https://swapi.co"
 }
+const pokeapiConfig = {
+  baseURL: ""
+}
 
 class Game extends Component {
   constructor(props){
@@ -37,7 +40,6 @@ class Game extends Component {
   }
   
   getWord(){
-    console.log(this.props);
     let { wordCategory } = this.props;
     let category = wordCategory.split(' ');
 
@@ -81,9 +83,7 @@ class Game extends Component {
     let { word, guessedLetters } = this.state;
 
     // calculate new userScore
-    console.log(this.props);
     let newScore = Object.assign({}, this.props.score);
-    console.log("oldScore", newScore);
     let { total_score, word_score, games_played } = newScore;
     games_played++;
     total_score += word.length;
@@ -92,7 +92,6 @@ class Game extends Component {
 
     // send changes to database
     this.props.updateScore({ total_score, word_score, games_played });
-    console.log("newScore", this.props.score);
   }
   
   makeBoard(word){
@@ -137,6 +136,7 @@ class Game extends Component {
 
     let { guessedLetters, board, guess, userWon, definition } = this.state;
     let { wordCategory } = this.props;
+    let category = wordCategory.split(' ');
 
     let guessed = guessedLetters.reduce((acc, value, i, arr) => {
       return acc + ((i !== arr.length - 1) ? `${value}, ` : value);
@@ -148,7 +148,7 @@ class Game extends Component {
         <div className="window">
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuLIa1IlvLDjVYQv5t397U5U5fg3pjM7ivnmC80j1NCvZwJOqwmg" alt="hangman-image"/>
           <div className="right">
-            <p className="category">Category: {wordCategory}</p>
+            <p className="category">Category: {category[1]}</p>
             <p className="board">{board.join('')}</p>
             <p className="definition">{definition}</p>
             {

@@ -109,7 +109,7 @@ class Main extends Component {
             <option value="SW species">Star Wars- Species</option>
             <option value="SW planets">Star Wars- Planets</option>
           </select>
-          <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory) }>Start New Game</button></Link>
+          <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory === "select" ? "films" : currentCategory) }>Start New Game</button></Link>
         </div>
       </div>
     );
