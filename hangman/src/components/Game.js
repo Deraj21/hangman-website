@@ -16,15 +16,6 @@ const swapiConfig = {
   baseURL: "https://swapi.co"
 }
 
-const swapiCategories = [
-  "people",
-  "films",
-  "starships",
-  "vehicles",
-  "species",
-  "planets"
-];
-
 class Game extends Component {
   constructor(props){
     super(props);
@@ -48,19 +39,23 @@ class Game extends Component {
   
   getWord(){
 
-    let category = this.randomFromList(swapiCategories);
+    let { wordCategory } = this.props;
+    category = wordCategory.split(' ');
 
-    Axios.get(`/api/${category}/`, swapiConfig)
-      .then(response => {
-        let item = this.randomFromList(response.data.results);
-        let newWord = (category === 'films') ? item.title : item.name;
-        this.setState({
-          word: newWord,
-          board: this.makeBoard(newWord),
-          category: category
-        });
-      })
-      .catch( err => console.log(`swapi err: ${err.message}`) )
+    if (category[0] === 'SW'){
+      Axios.get(`/api/${category[1]}/`, swapiConfig)
+        .then(response => {
+          let item = this.randomFromList(response.data.results);
+          let newWord = (category[1] === 'films') ? item.title : item.name;
+          this.setState({
+            word: newWord,
+            board: this.makeBoard(newWord)
+          });
+        })
+        .catch( err => console.log(`swapi err: ${err.message}`) );
+    } else {
+      console.log('category not found');
+    }
 
 
     // Axios.get("/words?random=true", wordsConfig)
@@ -141,7 +136,8 @@ class Game extends Component {
 
   render() {
 
-    let { guessedLetters, board, guess, userWon, definition, category } = this.state;
+    let { guessedLetters, board, guess, userWon, definition } = this.state;
+    let { wordCategory } = this.props;
 
     let guessed = guessedLetters.reduce((acc, value, i, arr) => {
       return acc + ((i !== arr.length - 1) ? `${value}, ` : value);
@@ -153,7 +149,7 @@ class Game extends Component {
         <div className="window">
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuLIa1IlvLDjVYQv5t397U5U5fg3pjM7ivnmC80j1NCvZwJOqwmg" alt="hangman-image"/>
           <div className="right">
-            <p className="category">Category: {category}</p>
+            <p className="category">Category: {wordCategory}</p>
             <p className="board">{board.join('')}</p>
             <p className="definition">{definition}</p>
             {

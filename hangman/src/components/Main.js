@@ -100,7 +100,7 @@ class Main extends Component {
           </table>
         </div>
         <div className="bottom-button">
-          <select className="category-select" onChange={ e => { this.handleChange(e.target.value); console.log(e.target.value) } }>
+          <select className="category-select" onChange={ e => this.handleChange(e.target.value) }>
             <option value="select">--Select a category--</option>
             <option value="SW people">Star Wars- People</option>
             <option value="SW films">Star Wars- Films</option>
@@ -109,7 +109,7 @@ class Main extends Component {
             <option value="SW species">Star Wars- Species</option>
             <option value="SW planets">Star Wars- Planets</option>
           </select>
-          <Link to="/game"><button>Start New Game</button></Link>
+          <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory) }>Start New Game</button></Link>
         </div>
       </div>
     );
