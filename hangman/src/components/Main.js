@@ -39,6 +39,8 @@ class Main extends Component {
         <tr key={`row-${i+1}`}>
           <td>{i+1}</td>
           <td>{total_score}</td>
+          <td>{word_score}</td>
+          <td>{games_played}</td>
           <td>{`${first_name} ${last_name}`}</td>
         </tr>
       )
@@ -73,7 +75,9 @@ class Main extends Component {
             <tbody>
               <tr>
                 <td>Place</td>
-                <td>Score</td>
+                <td>Total Score</td>
+                <td>Per Word Score</td>
+                <td>Games Played</td>
                 <td>Name</td>
               </tr>
             { scores }
