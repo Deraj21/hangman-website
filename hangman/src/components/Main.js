@@ -83,8 +83,6 @@ class Main extends Component {
         <div className="bottom-button">
           <Link to="/game"><button>Start New Game</button></Link>
         </div>
-        <div className="bottom-button"><button onClick={ () => console.log(this.props) }>Get props</button></div>
-
       </div>
     );
   }
