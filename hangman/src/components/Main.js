@@ -57,7 +57,7 @@ class Main extends Component {
     return (
       <div className="Main">
         <div className="top">
-          <h1>Impossible Hangman!</h1>
+          <h1>Star Wars Hangman!</h1>
           <div className="profile-box">
             <img src={`https://robohash.org/${givenName}${familyName}?set=set4`} alt="profile pic"/>
             <div className="links">
