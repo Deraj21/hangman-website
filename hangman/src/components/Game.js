@@ -181,8 +181,8 @@ class Game extends Component {
 }
 
 function mapStateToProps(state) {
-  let { score } = state;
-  return { score };
+  let { score, wordCategory } = state;
+  return { score, wordCategory };
 }
 
 export default withRouter(connect( mapStateToProps, { updateScore } )( Game ));

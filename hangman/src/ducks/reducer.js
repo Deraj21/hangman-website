@@ -14,12 +14,14 @@ let initialState = {
     total_score: 0,
     word_score: 0,
     games_played: 0
-  }
+  },
+  wordCategory: ''
 }
 
 const UPDATE_CURRENT_USER = "UPDATE_CURRENT_USER";
 const UPDATE_TOP_SCORES = "UPDATE_TOP_SCORES";
 const UPDATE_SCORE = "UPDATE_SCORE";
+const UPDATE_WORD_CATEGORY = "UPDATE_CATEGORY";
 
 function reducer(state = initialState, action) {
 
@@ -30,6 +32,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { topScores: action.payload });
     case UPDATE_SCORE:
       return Object.assign({}, state, { score: action.payload });
+    case UPDATE_WORD_CATEGORY:
+      return Object.assign({}, state, { wordCategory: action.payload });
     default:
       return state;
   }
@@ -56,6 +60,12 @@ export function updateScore(score){
   return {
     type: UPDATE_SCORE,
     payload: score
+  };
+}
+export function updateWordCategory(wordCategory){
+  return {
+    type: UPDATE_WORD_CATEGORY,
+    payload: wordCategory
   };
 }
 

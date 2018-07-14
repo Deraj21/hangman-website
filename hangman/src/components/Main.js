@@ -3,9 +3,17 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import Axios from 'axios';
 import { connect } from 'react-redux';
-import { updateCurrentUser, updateTopScores, updateScore } from '../ducks/reducer';
+import { updateCurrentUser, updateTopScores, updateScore, updateWordCategory } from '../ducks/reducer';
 
 class Main extends Component {
+
+  constructor(){
+    super();
+
+    this.state = {
+      category: ''
+    }
+  }
 
   componentDidMount(){
     // get currentUser
@@ -28,6 +36,10 @@ class Main extends Component {
         this.props.updateScore(response.data[0]);
       })
       .catch( err => console.log(err.message));
+  }
+
+  handleChange(){
+
   }
   
   render() {
@@ -85,7 +97,16 @@ class Main extends Component {
           </table>
         </div>
         <div className="bottom-button">
-          <Link to="/game"><button>Start New Game</button></Link>
+          <select id="pet-select">
+            <option value=''>--Select a category--</option>
+            <option value="SW people">Star Wars- People</option>
+            <option value="SW films">Star Wars- Films</option>
+            <option value="SW starships">Star Wars- Starships</option>
+            <option value="SW vehicles">Star Wars- Vehicles</option>
+            <option value="SW species">Star Wars- Species</option>
+            <option value="SW planets">Star Wars- Planets</option>
+          </select>
+          <Link to="/game"><button onClick={ () => this.props.updateWordCategory(null) }>Start New Game</button></Link>
         </div>
       </div>
     );
@@ -93,8 +114,8 @@ class Main extends Component {
 }
 
 function mapStateToProps(state) {
-  let { topScores, currentUser } = state;
-  return { topScores, currentUser };
+  let { topScores, currentUser, wordCategory } = state;
+  return { topScores, currentUser, wordCategory };
 }
 
-export default withRouter(connect( mapStateToProps, { updateCurrentUser, updateTopScores, updateScore } )( Main ));
+export default withRouter(connect( mapStateToProps, { updateCurrentUser, updateTopScores, updateScore, updateWordCategory } )( Main ));
