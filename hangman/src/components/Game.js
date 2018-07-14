@@ -37,7 +37,7 @@ class Game extends Component {
   }
   
   getWord(){
-
+    console.log(this.props);
     let { wordCategory } = this.props;
     let category = wordCategory.split(' ');
 
