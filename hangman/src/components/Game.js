@@ -23,7 +23,6 @@ class Game extends Component {
     this.state = {
       word: '',
       definition: '',
-      category: '',
       guess: '',
       board: [],
       guessedLetters: [],
@@ -40,7 +39,7 @@ class Game extends Component {
   getWord(){
 
     let { wordCategory } = this.props;
-    category = wordCategory.split(' ');
+    let category = wordCategory.split(' ');
 
     if (category[0] === 'SW'){
       Axios.get(`/api/${category[1]}/`, swapiConfig)
