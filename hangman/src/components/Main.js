@@ -100,8 +100,8 @@ class Main extends Component {
           </table>
         </div>
         <div className="bottom-button">
-          <select className="category-select" onChange={ e => { this.handleChange(e.target.value); console.log(e.target.option) } }>
-            <option value=''>--Select a category--</option>
+          <select className="category-select" onChange={ e => { this.handleChange(e.target.value); console.log(e.target.value) } }>
+            <option value="select">--Select a category--</option>
             <option value="SW people">Star Wars- People</option>
             <option value="SW films">Star Wars- Films</option>
             <option value="SW starships">Star Wars- Starships</option>
