@@ -11,8 +11,10 @@ class Main extends Component {
     super();
 
     this.state = {
-      category: ''
+      currentCategory: ''
     }
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount(){
@@ -38,12 +40,13 @@ class Main extends Component {
       .catch( err => console.log(err.message));
   }
 
-  handleChange(){
-
+  handleChange(category){
+    this.setState({ cureentCategory: category });
   }
   
   render() {
     let { topScores, currentUser } = this.props;
+    let { currentCategory } = this.state;
 
     let scores = topScores.map((item, i) => {
       let { total_score, word_score, games_played, first_name, last_name } = item;
@@ -97,7 +100,7 @@ class Main extends Component {
           </table>
         </div>
         <div className="bottom-button">
-          <select id="pet-select">
+          <select className="category-select" onChange={ e => { this.handleChange(e.Target.value); console.log(currentCategory) } }>
             <option value=''>--Select a category--</option>
             <option value="SW people">Star Wars- People</option>
             <option value="SW films">Star Wars- Films</option>
@@ -106,7 +109,7 @@ class Main extends Component {
             <option value="SW species">Star Wars- Species</option>
             <option value="SW planets">Star Wars- Planets</option>
           </select>
-          <Link to="/game"><button onClick={ () => this.props.updateWordCategory(null) }>Start New Game</button></Link>
+          <Link to="/game"><button>Start New Game</button></Link>
         </div>
       </div>
     );
