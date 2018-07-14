@@ -41,7 +41,7 @@ class Main extends Component {
   }
 
   handleChange(category){
-    this.setState({ cureentCategory: category });
+    this.setState({ currentCategory: category });
   }
   
   render() {

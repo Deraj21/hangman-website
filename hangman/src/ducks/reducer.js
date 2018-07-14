@@ -15,7 +15,7 @@ let initialState = {
     word_score: 0,
     games_played: 0
   },
-  wordCategory: ''
+  wordCategory: 'SW films'
 }
 
 const UPDATE_CURRENT_USER = "UPDATE_CURRENT_USER";
