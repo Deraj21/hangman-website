@@ -53,7 +53,7 @@ class Game extends Component {
         })
         .catch( err => console.log(`swapi err: ${err.message}`) );
     } else {
-      console.log('category not found');
+      console.log('category not found', wordCategory, category);
     }
 
 
