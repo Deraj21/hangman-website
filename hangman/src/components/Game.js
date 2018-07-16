@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 import { updateScore } from '../ducks/reducer';
+import pokemon from './pokemon';
 
 const wordsapiConfig = {
   baseURL: "https://wordsapiv1.p.mashape.com",
@@ -13,9 +14,6 @@ const wordsapiConfig = {
 };
 const swapiConfig = {
   baseURL: "https://swapi.co"
-}
-const pokeapiConfig = {
-  baseURL: "https://pokeapi"
 }
 
 class Game extends Component {
@@ -54,13 +52,13 @@ class Game extends Component {
           });
         })
         .catch( err => console.log(`swapi err: ${err.message}`) );
-    // Pokeapi
+    // Pokemon
     } else if (category[0] === "pokemon") {
-      Axios.get(`/api/pokemon/1/`, pokeapiConfig)
-        .then( response => {
-          console.log(response);
-        })
-        .catch( err => console.log(`poke err: ${err.message}`) )
+      let newWord = this.randomFromList(pokemon).name;
+      this.setState({
+        word: newWord,
+        board: this.makeBoard(newWord)
+      });
     // Wordsapi
     } else if (category[0] === 'random') {
       Axios.get("/words?random=true", wordsapiConfig)

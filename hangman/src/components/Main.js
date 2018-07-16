@@ -101,17 +101,17 @@ class Main extends Component {
         </div>
         <div className="bottom-button">
           <select className="category-select" onChange={ e => this.handleChange(e.target.value) }>
-            <option value="select">--Select a category--</option>
-            <option value="SW people">Star Wars- People</option>
-            <option value="SW films">Star Wars- Films</option>
-            <option value="SW starships">Star Wars- Starships</option>
-            <option value="SW vehicles">Star Wars- Vehicles</option>
-            <option value="SW species">Star Wars- Species</option>
-            <option value="SW planets">Star Wars- Planets</option>
-            <option value="pokemon">Pokemon</option>
-            <option value="random">Random Word from Dictionary</option>
+            <option value="select">      --Select a category-- </option>
+            <option value="SW people">   Star Wars- People     </option>
+            <option value="SW films">    Star Wars- Films      </option>
+            <option value="SW starships">Star Wars- Starships  </option>
+            <option value="SW vehicles"> Star Wars- Vehicles   </option>
+            <option value="SW species">  Star Wars- Species    </option>
+            <option value="SW planets">  Star Wars- Planets    </option>
+            <option value="pokemon">     Pokemon (gen 1-3)     </option>
+            <option value="random">      Random Dictionary Word</option>
           </select>
-          <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory === "select" ? "films" : currentCategory) }>Start New Game</button></Link>
+          <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory === "select" ? "random" : currentCategory) }>Start New Game</button></Link>
         </div>
       </div>
     );
