@@ -56,7 +56,7 @@ class Main extends Component {
           <td>{total_score}</td>
           <td>{word_score}</td>
           <td>{games_played}</td>
-          <td>{`${first_name} ${last_name}`}</td>
+          <td>{`${first_name ? first_name : ''} ${last_name ? last_name : ''}`}</td>
         </tr>
       )
     });
@@ -108,6 +108,8 @@ class Main extends Component {
             <option value="SW vehicles">Star Wars- Vehicles</option>
             <option value="SW species">Star Wars- Species</option>
             <option value="SW planets">Star Wars- Planets</option>
+            <option value="pokemon">Pokemon</option>
+            <option value="random">Random Word from Dictionary</option>
           </select>
           <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory === "select" ? "films" : currentCategory) }>Start New Game</button></Link>
         </div>

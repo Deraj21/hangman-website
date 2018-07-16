@@ -5,18 +5,17 @@ import Axios from 'axios';
 import { connect } from 'react-redux';
 import { updateScore } from '../ducks/reducer';
 
-// const wordsConfig = {
-//   baseURL: "https://wordsapiv1.p.mashape.com",
-//   headers: {
-//     "X-Mashape-Key":"2f0GdKnXKsmshUuilyDAgDCrKPHJp1878O1jsncmbHfvljrHmi"
-//   }
-// };
-
+const wordsapiConfig = {
+  baseURL: "https://wordsapiv1.p.mashape.com",
+  headers: {
+    "X-Mashape-Key":"2f0GdKnXKsmshUuilyDAgDCrKPHJp1878O1jsncmbHfvljrHmi"
+  }
+};
 const swapiConfig = {
   baseURL: "https://swapi.co"
 }
 const pokeapiConfig = {
-  baseURL: ""
+  baseURL: "https://pokeapi"
 }
 
 class Game extends Component {
@@ -43,6 +42,7 @@ class Game extends Component {
     let { wordCategory } = this.props;
     let category = wordCategory.split(' ');
 
+    // SWapi
     if (category[0] === 'SW'){
       Axios.get(`/api/${category[1]}/`, swapiConfig)
         .then(response => {
@@ -54,23 +54,30 @@ class Game extends Component {
           });
         })
         .catch( err => console.log(`swapi err: ${err.message}`) );
+    // Pokeapi
+    } else if (category[0] === "pokemon") {
+      Axios.get(`/api/pokemon/1/`, pokeapiConfig)
+        .then( response => {
+          console.log(response);
+        })
+        .catch( err => console.log(`poke err: ${err.message}`) )
+    // Wordsapi
+    } else if (category[0] === 'random') {
+      Axios.get("/words?random=true", wordsapiConfig)
+        .then( response => {
+          let { word } = response.data;
+          console.log(word);
+          this.setState({
+            word: word,
+            board: this.makeBoard(word)
+          });
+        })
+        .catch( err => {
+          console.log(`words err: ${err.message}`);
+        });
     } else {
       console.log('category not found', wordCategory, category);
     }
-
-
-    // Axios.get("/words?random=true", wordsConfig)
-    //   .then( response => {
-    //     let { word } = response.data;
-    //     console.log(word);
-    //     this.setState({
-    //       word: word,
-    //       board: this.makeBoard(word)
-    //     });
-    //   })
-    //   .catch( err => {
-    //     console.log(`Error message: ${err.message}`);
-    //   });
 
   }
 
