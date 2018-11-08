@@ -8,6 +8,8 @@ const controller = require('./controller');
 require('dotenv').config();
 let { SECRET, PORT, CONNECTION_STRING, DOMAIN, CLIENT_ID, CLIENT_SECRET, LOCAL_APP, HOSTED_APP, IS_HOSTED } = process.env;
 
+console.log({SECRET, PORT, CONNECTION_STRING, DOMAIN, CLIENT_ID, CLIENT_SECRET, LOCAL_APP, HOSTED_APP, IS_HOSTED});
+
 const app = express();
 app.use(bodyParser.json());
 app.use(express.static( `${__dirname}/../build` ));

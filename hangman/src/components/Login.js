@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 const HOSTED_SERVER="206.189.77.22";
 const LOCAL_SERVER="localhost";
-const IS_HOSTED=true;
+const IS_HOSTED=false;
 
 export default class Login extends Component {
   
