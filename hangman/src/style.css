@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Open+Sans");
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -52,16 +53,26 @@ table {
   border-spacing: 0;
 }
 
+/* Coolors Exported Palette - coolors.co/bcfcff-efeaea-363732-000000-0061a3 */
+/* HEX */
 .App {
-  background-color: lightblue;
-  font-family: sans-serif;
+  background-color: #BCFCFF;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
+  height: 100vh;
+  width: 100vw;
+}
+.App div {
+  box-sizing: border-box;
 }
 .App h1 {
   font-size: 40px;
+  font-family: "Montserrat", sans-serif;
 }
 .App h2 {
   font-size: 30px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
 }
 .App h3 {
   font-size: 20px;
@@ -85,14 +96,57 @@ table {
   justify-content: center;
 }
 
-.Login .portal {
-  background-color: darkgrey;
-  margin: auto;
-  height: 100px;
-  width: 100px;
+.Login {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
 }
-.Login .portal button {
-  margin: auto;
+.Login h1 {
+  text-align: center;
+  margin: 40px;
+}
+.Login button {
+  margin-top: 100px;
+  padding: 10px;
+  border: 1px solid #363732;
+  background-color: #0061A3;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.Login button a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.hangman {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hangman .head {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: white 3px solid;
+}
+.hangman .part {
+  background-color: white;
+  position: absolute;
+  height: 45px;
+  width: 3px;
+}
+.hangman .left {
+  transform: translate(-14px) rotate(35deg);
+}
+.hangman .right {
+  transform: translate(14px) rotate(-35deg);
+}
+.hangman .legs {
+  transform: translateY(38px);
 }
 
 .Main {

@@ -1,0 +1,32 @@
+.hangman {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .head {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: white 3px solid;
+  }
+
+  .part {
+    background-color: white;
+    position: absolute;
+    height: 45px;
+    width: 3px;
+  }
+
+  .left {
+    transform: translate(-14px) rotate(35deg);
+  }
+
+  .right {
+    transform: translate(14px) rotate(-35deg);
+  }
+
+  .legs {
+    transform: translateY(38px);
+  }
+}
+

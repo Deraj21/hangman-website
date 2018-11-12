@@ -1,21 +1,29 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat|Open+Sans');
-
-//font-family: 'Montserrat', sans-serif;
-//font-family: 'Open Sans', sans-serif;
+$secondary-font: 'Montserrat', sans-serif;
+$primary-font: 'Open Sans', sans-serif;
 
 @import 'reset';
+@import './palette.scss';
 
 .App {
-  background-color: lightblue;
-  font-family: sans-serif;
+  background-color: $color1;
+  font-family: $primary-font;
   font-size: 16px;
+  height: 100vh;
+  width: 100vw;
+  div {
+    box-sizing: border-box;
+  }
 
   h1 {
     font-size: 40px;
+    font-family: $secondary-font;
   }
 
   h2 {
     font-size: 30px;
+    font-family: $secondary-font;
+    font-weight: bold;
   }
 
   h3 {
@@ -46,6 +54,7 @@
 }
 
 @import 'Login';
+@import 'Hangman';
 @import 'Main';
 @import 'Profile';
 @import 'Game';
