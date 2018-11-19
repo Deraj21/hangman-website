@@ -10,8 +10,8 @@ $keyboard-font: 'Roboto Mono';
   background-color: $color1;
   font-family: $primary-font;
   font-size: 16px;
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
 
   div {
     box-sizing: border-box;
@@ -68,7 +68,6 @@ $keyboard-font: 'Roboto Mono';
   select {
     padding: 5px;
     border-radius: 5px;
-    margin-right: 10px;
   }
   select:hover {
     background-color: $color4;

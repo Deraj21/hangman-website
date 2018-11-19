@@ -65,10 +65,14 @@ class Main extends Component {
     let { id, name, nickname } = currentUser;
     let { givenName, familyName } = name;
     if (!givenName) {
-      givenName = nickname;
+      if (!nickname) {
+        givenName = "Michael"
+      } else {
+        givenName = nickname;
+      }
     }
     if (!familyName) {
-      familyName = '';
+      familyName = "Jephandrews";
     }
     
 
@@ -76,12 +80,17 @@ class Main extends Component {
       <div className="Main">
 
         <div className="header">
-          <h1>Hangman!</h1>
-          <Hangman hangmanColor="black" backgroundColor="#0061A3" size="90px" parts="11" />
+          <div className="title">
+            <h1>Hangman!</h1>
+            <div className="hangman-box"><Hangman hangmanColor="black" backgroundColor="#0061A3" size="60px" parts="11" /></div>
+          </div>
+
           <div className="profile-box">
-            <img src={`https://robohash.org/${givenName}${familyName}?set=set4`} alt="profile pic"/>
-            <div className="links">
+            <div className="img-box">
+              <img src={`https://robohash.org/${givenName}${familyName}?set=set4`} alt="profile pic"/>
               <p>{`${givenName} ${familyName}`}</p>
+            </div>
+            <div className="links">
               <Link to={`/profile/${id}`}><a>View Profile</a></Link>
               <Link to="/"><a>Logout</a></Link>
             </div>
@@ -91,6 +100,7 @@ class Main extends Component {
         <div className="content">
 
           <div className="btn-box">
+            <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory === "select" ? "random" : currentCategory) }>Start New Game</button></Link>
             <select className="category-select" onChange={ e => this.handleChange(e.target.value) }>
               <option value="select">      --Select a category-- </option>
               <option value="SW people">   Star Wars- People     </option>
@@ -102,7 +112,6 @@ class Main extends Component {
               <option value="pokemon">     Pokemon (gen 1-3)     </option>
               <option value="random">      Random Dictionary Word</option>
             </select>
-            <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory === "select" ? "random" : currentCategory) }>Start New Game</button></Link>
           </div>
 
           <h2>Current Standings</h2>

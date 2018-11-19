@@ -15,8 +15,10 @@ class Hangman extends Component {
     let { hangmanColor, backgroundColor, size, parts } = this.props;
     let hangman = document.querySelector('.Hangman');
     hangman.style.setProperty('--hangman-color', hangmanColor);
-    hangman.style.setProperty('--hangman-size', size)
     hangman.style.setProperty('--background-color', backgroundColor);
+    if (size) {
+      hangman.style.setProperty('--hangman-size', size);
+    }
 
     this.hideParts(parts);
     this.setState({mounted: true});
@@ -37,7 +39,7 @@ class Hangman extends Component {
   render() {
     let { color, size, parts } = this.props;
     let { mounted } = this.state;
-
+    
     if (mounted) {
       this.hideParts(parts);
     }

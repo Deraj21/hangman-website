@@ -12,10 +12,14 @@ class Profile extends Component {
     let { name, nickname } = this.props.currentUser;
     let { givenName, familyName } = name;
     if (!givenName) {
-      givenName = nickname;
+      if (!nickname){
+        givenName = "Michael"
+      } else {
+        givenName = nickname;
+      }
     }
     if (!familyName) {
-      familyName = '';
+      familyName = "Jephandrews";
     }
 
 

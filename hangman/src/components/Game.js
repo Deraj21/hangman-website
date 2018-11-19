@@ -29,13 +29,20 @@ class Game extends Component {
       rightGuessedLetters: [],
       wrongGuessedLetters: [],
       userWon: false,
-      parts: 0
+      parts: 0,
+      hangmanSize: 100
     }
 
     this.handleGuess = this.handleGuess.bind(this);
   }
 
   componentDidMount(){
+    let mql = window.matchMedia('screen and (min-width: 426px)');
+    mql.addListener(e => {
+      this.setState({ hangmanSize: 70 });
+      console.log('hello!');
+    });
+
     this.getWord();
   }
   
@@ -146,16 +153,18 @@ class Game extends Component {
 
   render() {
 
-    let { rightGuessedLetters, wrongGuessedLetters, board, guess, userWon, definition, parts } = this.state;
+    let { rightGuessedLetters, wrongGuessedLetters, board, guess, userWon, definition, parts, hangmanSize } = this.state;
     let { wordCategory } = this.props;
     let category = wordCategory.split(' ');
+
+    console.log(hangmanSize);
 
     return (
       <div className="Game">
         <h1>StarWars Hangman!</h1>
 
         <div className="window">
-          <div> <Hangman hangmanColor="black" backgroundColor="white" size="150px" parts={parts} /> </div>
+          <div className="hangman-box"> <Hangman hangmanColor="black" backgroundColor="white" parts={parts} /> </div>
           <div className="right">
             <p className="category">Category: {category[1]}</p>
             <p className="board">{board.join('')}</p>
@@ -171,7 +180,7 @@ class Game extends Component {
           </div>
         </div>
         
-        <Link to="/main"><button>back</button></Link>
+        <Link to="/main"><button>{"<< Back"}</button></Link>
 
       </div>
     );

@@ -59,8 +59,8 @@ table {
   background-color: #BCFCFF;
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
 }
 .App div {
   box-sizing: border-box;
@@ -106,7 +106,6 @@ table {
 .App select {
   padding: 5px;
   border-radius: 5px;
-  margin-right: 10px;
 }
 .App select:hover {
   background-color: #363732;
@@ -155,12 +154,13 @@ table {
   font-family: sans-serif;
 }
 .Main table {
-  margin-top: 10px;
+  margin: 10px 0px 20px 0px;
 }
 .Main .header {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   background-color: #0061A3;
   color: white;
   border: solid 1px black;
@@ -168,22 +168,45 @@ table {
 .Main .header h1 {
   text-align: center;
 }
+.Main .header .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .Main .header .profile-box {
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 10px;
+  margin-left: 40px;
 }
-.Main .header .profile-box img {
-  height: 75px;
-  width: 75px;
-  margin-right: 20px;
+.Main .header .profile-box .img-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: black;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
+.Main .header .profile-box .img-box img {
+  height: 75%;
+}
+.Main .header .profile-box .img-box p {
+  color: white;
+  font-weight: bold;
 }
 .Main .header .profile-box .links {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  margin: 10px 0px;
 }
 .Main .header .profile-box .links a {
-  font-weight: bold;
   color: white;
+  margin: 10px 0px;
+  font-style: italic;
 }
 .Main .header .profile-box .links a:hover {
   color: #363732;
@@ -193,13 +216,52 @@ table {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin: auto;
-  width: 80vw;
+}
+.Main .content button {
+  margin: 10px;
 }
 .Main .content .btn-box {
-  margin: 50px;
+  margin: 50px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
+@media screen and (max-width: 769px) {
+  .Main .header {
+    justify-content: space-around;
+  }
+}
+@media screen and (max-width: 426px) {
+  .Main .header h1 {
+    font-size: 40px;
+  }
+  .Main .header .profile-box {
+    width: 100%;
+    font-size: 14px;
+  }
+  .Main .header .profile-box .img-box {
+    height: 75px;
+    width: 75px;
+  }
+  .Main .header .profile-box .links a {
+    margin: 5px 0px;
+  }
+  .Main .header .hangman-box {
+    margin: 0px;
+    margin-left: -30px;
+  }
+}
+@media screen and (max-width: 321px) {
+  .Main .header h1 {
+    font-size: 30px;
+  }
+  .Main .content h2 {
+    font-size: 20px;
+  }
+}
 :root {
   --background-color: white;
   --hangman-color: black;
@@ -327,12 +389,21 @@ table {
   text-align: center;
   margin: 20px;
 }
+.Game button {
+  margin: 20px;
+}
 .Game .window {
   border: 1px solid #363732;
   border-radius: 5px;
   background-color: white;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.Game .window .hangman-box {
+  height: 170px;
+  width: 250px;
 }
 .Game .window .right {
   display: flex;
@@ -341,13 +412,26 @@ table {
   align-items: center;
 }
 .Game .window .right p {
-  margin: 10px 0px;
+  margin: 10px 10px;
+  text-align: center;
 }
 .Game .window .right .board {
   letter-spacing: 5px;
   font-size: 20px;
 }
 
+@media screen and (max-width: 426px) {
+  .Game h1 {
+    font-size: 30px;
+  }
+  .Game .window {
+    flex-direction: column;
+  }
+  .Game .window .hangman-box {
+    height: 150px;
+    width: 150px;
+  }
+}
 .Keyboard {
   margin: 10px;
   display: flex;
