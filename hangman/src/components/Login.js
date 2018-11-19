@@ -11,7 +11,7 @@ export default class Login extends Component {
     return (
       <div className="Login">
         <h1>Welcome to Hangman!</h1>
-        <Hangman />
+        <Hangman hangmanColor="black" backgroundColor="#BCFCFF" size='150px' parts="11" />
           <button><a href={`http://${IS_HOSTED ? HOSTED_SERVER : LOCAL_SERVER}:4000/login`}>Click Here to Login</a></button>
       </div>
     );

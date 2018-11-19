@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 import { updateCurrentUser, updateTopScores, updateScore, updateWordCategory } from '../ducks/reducer';
+import Hangman from './Hangman';
 
 class Main extends Component {
 
@@ -73,19 +74,38 @@ class Main extends Component {
 
     return (
       <div className="Main">
-        <div className="top">
-          <h1>Star Wars Hangman!</h1>
+
+        <div className="header">
+          <h1>Hangman!</h1>
+          <Hangman hangmanColor="black" backgroundColor="#0061A3" size="90px" parts="11" />
           <div className="profile-box">
             <img src={`https://robohash.org/${givenName}${familyName}?set=set4`} alt="profile pic"/>
             <div className="links">
               <p>{`${givenName} ${familyName}`}</p>
-              <Link to={`/profile/${id}`}><p>View Profile</p></Link>
-              <Link to="/"><p>Logout</p></Link>
+              <Link to={`/profile/${id}`}><a>View Profile</a></Link>
+              <Link to="/"><a>Logout</a></Link>
             </div>
           </div>
         </div>
-        <div className="scores">
-          <h2>Top Scores</h2>
+
+        <div className="content">
+
+          <div className="btn-box">
+            <select className="category-select" onChange={ e => this.handleChange(e.target.value) }>
+              <option value="select">      --Select a category-- </option>
+              <option value="SW people">   Star Wars- People     </option>
+              <option value="SW films">    Star Wars- Films      </option>
+              <option value="SW starships">Star Wars- Starships  </option>
+              <option value="SW vehicles"> Star Wars- Vehicles   </option>
+              <option value="SW species">  Star Wars- Species    </option>
+              <option value="SW planets">  Star Wars- Planets    </option>
+              <option value="pokemon">     Pokemon (gen 1-3)     </option>
+              <option value="random">      Random Dictionary Word</option>
+            </select>
+            <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory === "select" ? "random" : currentCategory) }>Start New Game</button></Link>
+          </div>
+
+          <h2>Current Standings</h2>
           <table>
             <tbody>
               <tr>
@@ -98,21 +118,8 @@ class Main extends Component {
             { scores }
             </tbody>
           </table>
-        </div>
-        <div className="bottom-button">
-          <select className="category-select" onChange={ e => this.handleChange(e.target.value) }>
-            <option value="select">      --Select a category-- </option>
-            <option value="SW people">   Star Wars- People     </option>
-            <option value="SW films">    Star Wars- Films      </option>
-            <option value="SW starships">Star Wars- Starships  </option>
-            <option value="SW vehicles"> Star Wars- Vehicles   </option>
-            <option value="SW species">  Star Wars- Species    </option>
-            <option value="SW planets">  Star Wars- Planets    </option>
-            <option value="pokemon">     Pokemon (gen 1-3)     </option>
-            <option value="random">      Random Dictionary Word</option>
-          </select>
-          <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory === "select" ? "random" : currentCategory) }>Start New Game</button></Link>
-        </div>
+
+        </div>       
       </div>
     );
   }

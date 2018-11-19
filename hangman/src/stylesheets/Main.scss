@@ -1,14 +1,17 @@
 .Main {
   font-family: sans-serif;
   
-  div {
-    margin: 10px;
+  table {
+    margin-top: 10px;
   }
-
-  .top {
+  
+  .header {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    background-color: $color2;
+    color: white;
+    border: solid 1px black;
     
     h1 {
       text-align: center;
@@ -20,16 +23,40 @@
       img {
         height: 75px;
         width:  75px;
+        margin-right: 20px;
       }
 
       .links {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
+        a {
+          font-weight: bold;
+          color: white;
+        }
+        a:hover {
+          color: $color4;
+        }
       }
 
     }
 
   }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: auto;
+    width: 80vw;
+
+    .btn-box {
+      margin: 50px;
+    }
+
+  }
+
 
 }

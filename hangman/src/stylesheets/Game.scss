@@ -1,37 +1,35 @@
 .Game {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  h1, h2 {
+    text-align: center;
+    margin: 20px;
+  }
   
   .window {
-    margin: auto;
-    height: 300px;
-    width: 600px;
-    background-color: lightgray;  
+    border: 1px solid $color4;
+    border-radius: 5px;
+    background-color: white;
     display: flex;
-    justify-content: space-around;
-    align-items: stretch;
-
-    img {
-      height: 250px;
-    }
+    flex-direction: row;
 
     .right {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
-      padding-top: 100px;
-      padding-bottom: 100px;
+
+      p {
+        margin: 10px 0px;
+      }
 
       .board {
         letter-spacing: 5px;
         font-size: 20px;
-        font-family: 'Courier New', Courier, monospace;
-      }
-
-      .guessed {
-        font-family: 'Courier New', Courier, monospace;
-        line-height: 25px;
       }
     }
   }
-
 }

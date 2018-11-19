@@ -5,6 +5,8 @@ import Axios from 'axios';
 import { connect } from 'react-redux';
 import { updateScore } from '../ducks/reducer';
 import pokemon from './pokemon';
+import Hangman from './Hangman';
+import Keyboard from './Keyboard';
 
 const wordsapiConfig = {
   baseURL: "https://wordsapiv1.p.mashape.com",
@@ -23,10 +25,11 @@ class Game extends Component {
     this.state = {
       word: '',
       definition: '',
-      guess: '',
       board: [],
-      guessedLetters: [],
-      userWon: false
+      rightGuessedLetters: [],
+      wrongGuessedLetters: [],
+      userWon: false,
+      parts: 0
     }
 
     this.handleGuess = this.handleGuess.bind(this);
@@ -85,14 +88,14 @@ class Game extends Component {
   }
 
   playerWon(){
-    let { word, guessedLetters } = this.state;
+    let { word, wrongGuessedLetters } = this.state;
 
     // calculate new userScore
     let newScore = Object.assign({}, this.props.score);
     let { total_score, word_score, games_played } = newScore;
     games_played++;
     total_score += word.length;
-    total_score -= guessedLetters.length;
+    total_score -= wrongGuessedLetters.length;
     word_score = total_score / games_played;
 
     // send changes to database
@@ -110,8 +113,10 @@ class Game extends Component {
   }
 
   handleGuess(guess){
+
     // set things up
-    let { board, guessedLetters, word } = this.state;
+    let { board, rightGuessedLetters, wrongGuessedLetters, word, parts } = this.state;
+    let newParts = parts + 1;
 
     // put correctly guessed letter on the board
     let newBoard = word.split('').map( (val, i) => (guess.toUpperCase() === val.toUpperCase()) ? val : board[i] );
@@ -120,61 +125,54 @@ class Game extends Component {
     let won = !!newBoard.reduce((acc, val) => { return acc * (val !== '_') }, true);
     if (won) this.playerWon();
     
-    // if board changed, no wrong guesses occured
+    // if board changed, user rightly guessed; add guess to right guesses
     if (this.state.board.join('') !== newBoard.join('')){
       this.setState({
         board: newBoard,
         guess: '',
-        userWon: won
+        userWon: won,
+        rightGuessedLetters: [...rightGuessedLetters, guess]
       });
     } else { // if didn't change, add guess to wrong guesses
       this.setState({
+        parts: newParts,
         board: newBoard,
         guess: '',
         userWon: won,
-        guessedLetters: [...guessedLetters, guess]
+        wrongGuessedLetters: [...wrongGuessedLetters, guess]
       });
     }
   }
 
   render() {
 
-    let { guessedLetters, board, guess, userWon, definition } = this.state;
+    let { rightGuessedLetters, wrongGuessedLetters, board, guess, userWon, definition, parts } = this.state;
     let { wordCategory } = this.props;
     let category = wordCategory.split(' ');
-
-    let guessed = guessedLetters.reduce((acc, value, i, arr) => {
-      return acc + ((i !== arr.length - 1) ? `${value}, ` : value);
-      }, '');
 
     return (
       <div className="Game">
         <h1>StarWars Hangman!</h1>
+
         <div className="window">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuLIa1IlvLDjVYQv5t397U5U5fg3pjM7ivnmC80j1NCvZwJOqwmg" alt="hangman-image"/>
+          <div> <Hangman hangmanColor="black" backgroundColor="white" size="150px" parts={parts} /> </div>
           <div className="right">
             <p className="category">Category: {category[1]}</p>
             <p className="board">{board.join('')}</p>
+            <Keyboard handleGuess={this.handleGuess} rightGuessed={rightGuessedLetters} wrongGuessed={wrongGuessedLetters}/>
             <p className="definition">{definition}</p>
             {
               userWon
               ?
               <h2>You Won!</h2>
               :
-              <div>
-                <input type="text" value={guess} onChange={ e => this.setState({ guess: e.target.value }) }/>
-                <button onClick={ () => this.handleGuess(guess[0])} >guess</button>
-              </div>
+              <p></p>
             }
-            <div className="guessed">
-              <h3>Guessed Letters:</h3>
-              <p>{guessed}</p>
-            </div>
           </div>
         </div>
-        <div className="bottom-button">
-          <Link to="/main"><button>back</button></Link>
-        </div>
+        
+        <Link to="/main"><button>back</button></Link>
+
       </div>
     );
   }

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat|Open+Sans");
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Roboto+Mono");
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -77,23 +77,57 @@ table {
 .App h3 {
   font-size: 20px;
 }
+.App a {
+  text-decoration: none;
+}
 .App table {
-  table-layout: fixed;
-  width: 500px;
-  margin: 10px;
-  padding: 10px;
-  border-collapse: collapse;
+  border: 1px solid black;
 }
-.App table > :nth-child(1) {
-  font-style: italic;
-}
-.App td {
-  border: 1px solid gray;
+.App table td {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
   padding: 5px;
 }
-.App .bottom-button {
-  display: flex;
-  justify-content: center;
+.App table tbody > :nth-child(2n) {
+  background-color: white;
+}
+.App table tbody > :nth-child(2n+1) {
+  background-color: #EFEAEA;
+}
+.App table tbody > :nth-child(1) {
+  background-color: #363732;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 1px;
+  color: white;
+}
+.App table tbody > :nth-child(1) td {
+  padding: 10px;
+}
+.App select {
+  padding: 5px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.App select:hover {
+  background-color: #363732;
+  color: white;
+}
+.App option {
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+}
+.App option:hover {
+  background-color: pink;
+}
+.App button {
+  padding: 10px;
+  border: 1px solid #363732;
+  background-color: #0061A3;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
 }
 
 .Login {
@@ -109,71 +143,164 @@ table {
   margin: 40px;
 }
 .Login button {
-  margin-top: 100px;
-  padding: 10px;
-  border: 1px solid #363732;
-  background-color: #0061A3;
-  border-radius: 5px;
-  cursor: pointer;
+  margin-top: 20px;
 }
-.Login button a {
+.Login a {
   text-decoration: none;
   color: white;
   font-weight: bold;
 }
 
-.hangman {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.hangman .head {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  border: white 3px solid;
-}
-.hangman .part {
-  background-color: white;
-  position: absolute;
-  height: 45px;
-  width: 3px;
-}
-.hangman .left {
-  transform: translate(-14px) rotate(35deg);
-}
-.hangman .right {
-  transform: translate(14px) rotate(-35deg);
-}
-.hangman .legs {
-  transform: translateY(38px);
-}
-
 .Main {
   font-family: sans-serif;
 }
-.Main div {
-  margin: 10px;
+.Main table {
+  margin-top: 10px;
 }
-.Main .top {
+.Main .header {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  background-color: #0061A3;
+  color: white;
+  border: solid 1px black;
 }
-.Main .top h1 {
+.Main .header h1 {
   text-align: center;
 }
-.Main .top .profile-box {
+.Main .header .profile-box {
   display: flex;
 }
-.Main .top .profile-box img {
+.Main .header .profile-box img {
   height: 75px;
   width: 75px;
+  margin-right: 20px;
 }
-.Main .top .profile-box .links {
+.Main .header .profile-box .links {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.Main .header .profile-box .links a {
+  font-weight: bold;
+  color: white;
+}
+.Main .header .profile-box .links a:hover {
+  color: #363732;
+}
+.Main .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: auto;
+  width: 80vw;
+}
+.Main .content .btn-box {
+  margin: 50px;
+}
+
+:root {
+  --background-color: white;
+  --hangman-color: black;
+  --hangman-ratio: 1/3;
+  --hangman-size: 100px;
+}
+
+.Hangman {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+.Hangman .gallows {
+  height: calc( var(--hangman-size) * 1.5 );
+  width: calc( var(--hangman-size) * 2 );
+  transform: translate(12%);
+  margin-left: -30%;
+}
+.Hangman .gallows .upper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+.Hangman .gallows .beam {
+  background-color: black;
+}
+.Hangman .gallows .one {
+  height: 100%;
+  width: 2%;
+}
+.Hangman .gallows .two {
+  display: absolute;
+  transform: translateX(275%) translateY(-10%) rotate(45deg);
+  height: 30%;
+  width: 2%;
+}
+.Hangman .gallows .three {
+  height: 3%;
+  width: 30%;
+  transform: translate(-6%);
+}
+.Hangman .gallows .four {
+  height: 17%;
+  width: 2%;
+  transform: translate(-122%);
+}
+.Hangman .gallows .floor {
+  height: 3%;
+  width: 70%;
+  margin-left: 30%;
+}
+.Hangman .gallows .hidden {
+  background-color: var(--background-color, black);
+  border-color: var(--background-color, white);
+}
+.Hangman .man {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: var(--hangman-size);
+  width: calc( var(--hangman-size) * var(--hangman-ratio) );
+}
+.Hangman .man .head {
+  height: 30%;
+  width: 90%;
+  border-radius: 50%;
+  border-color: var(--hangman-color);
+  border-width: calc(var(--hangman-size) / 30);
+  border-style: solid;
+}
+.Hangman .man .body, .Hangman .man .legs {
+  position: relative;
+  width: 100%;
+  height: 33%;
+}
+.Hangman .man .part {
+  background-color: var(--hangman-color, black);
+  position: absolute;
+  height: 100%;
+  width: 10%;
+}
+.Hangman .man .torso {
+  transform: translate(458%);
+}
+.Hangman .man .left {
+  transform: translate(145%) rotate(35deg);
+}
+.Hangman .man .right {
+  transform: translate(770%) rotate(-35deg);
+}
+.Hangman .man .legs {
+  transform: translateY(-10%);
+}
+.Hangman .man .hidden {
+  background-color: var(--background-color, white);
+  border-color: var(--background-color, white);
 }
 
 .Profile .top {
@@ -190,34 +317,64 @@ table {
   margin-left: 20px;
 }
 
-.Game .window {
-  margin: auto;
-  height: 300px;
-  width: 600px;
-  background-color: lightgray;
+.Game {
   display: flex;
-  justify-content: space-around;
-  align-items: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
-.Game .window img {
-  height: 250px;
+.Game h1, .Game h2 {
+  text-align: center;
+  margin: 20px;
+}
+.Game .window {
+  border: 1px solid #363732;
+  border-radius: 5px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
 }
 .Game .window .right {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding-top: 100px;
-  padding-bottom: 100px;
+}
+.Game .window .right p {
+  margin: 10px 0px;
 }
 .Game .window .right .board {
   letter-spacing: 5px;
   font-size: 20px;
-  font-family: "Courier New", Courier, monospace;
 }
-.Game .window .right .guessed {
-  font-family: "Courier New", Courier, monospace;
-  line-height: 25px;
+
+.Keyboard {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 230px;
+}
+.Keyboard .key {
+  background-color: #0061A3;
+  font-family: "Roboto Mono", "Courier New", Courier;
+  color: white;
+  font-size: 18px;
+  padding: 5px;
+  margin: 1px;
+  border: 1px solid black;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.Keyboard .key:hover {
+  filter: brightness(80%);
+}
+.Keyboard .pressed-right {
+  background-color: darkgreen;
+}
+.Keyboard .pressed-wrong {
+  background-color: darkred;
 }
 
 /*# sourceMappingURL=style.css.map */
