@@ -13,13 +13,13 @@ class Profile extends Component {
     let { givenName, familyName } = name;
     if (!givenName) {
       if (!nickname){
-        givenName = "Michael"
+        givenName = ""
       } else {
         givenName = nickname;
       }
     }
     if (!familyName) {
-      familyName = "Jephandrews";
+      familyName = "";
     }
 
 

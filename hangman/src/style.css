@@ -106,6 +106,7 @@ table {
 .App select {
   padding: 5px;
   border-radius: 5px;
+  cursor: pointer;
 }
 .App select:hover {
   background-color: #363732;
@@ -201,15 +202,15 @@ table {
 .Main .header .profile-box .links {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  margin: 10px 0px;
+  justify-content: space-around;
+  margin: 20px 0px;
 }
-.Main .header .profile-box .links a {
+.Main .header .profile-box .links span {
   color: white;
   margin: 10px 0px;
   font-style: italic;
 }
-.Main .header .profile-box .links a:hover {
+.Main .header .profile-box .links span:hover {
   color: #363732;
 }
 .Main .content {
@@ -236,6 +237,10 @@ table {
   }
 }
 @media screen and (max-width: 426px) {
+  .Main table {
+    font-size: 12px;
+    margin: 20px 10px;
+  }
   .Main .header h1 {
     font-size: 40px;
   }
@@ -247,8 +252,8 @@ table {
     height: 75px;
     width: 75px;
   }
-  .Main .header .profile-box .links a {
-    margin: 5px 0px;
+  .Main .header .profile-box .links {
+    margin: 10px 0px;
   }
   .Main .header .hangman-box {
     margin: 0px;
@@ -468,15 +473,15 @@ table {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  width: 230px;
+  width: 278px;
 }
 .Keyboard .key {
   background-color: #0061A3;
   font-family: "Roboto Mono", "Courier New", Courier;
   color: white;
   font-size: 18px;
-  padding: 5px;
-  margin: 1px;
+  padding: 7px;
+  margin: 2px;
   border: 1px solid black;
   border-radius: 3px;
   cursor: pointer;

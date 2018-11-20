@@ -68,6 +68,7 @@ $keyboard-font: 'Roboto Mono';
   select {
     padding: 5px;
     border-radius: 5px;
+    cursor: pointer;
   }
   select:hover {
     background-color: $color4;

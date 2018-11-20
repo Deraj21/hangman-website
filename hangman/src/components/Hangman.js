@@ -16,6 +16,7 @@ class Hangman extends Component {
     let hangman = document.querySelector('.Hangman');
     hangman.style.setProperty('--hangman-color', hangmanColor);
     hangman.style.setProperty('--background-color', backgroundColor);
+
     if (size) {
       hangman.style.setProperty('--hangman-size', size);
     }
@@ -37,7 +38,7 @@ class Hangman extends Component {
   }
   
   render() {
-    let { color, size, parts } = this.props;
+    let { parts } = this.props;
     let { mounted } = this.state;
     
     if (mounted) {
@@ -45,28 +46,28 @@ class Hangman extends Component {
     }
 
     return (
-      <div class="Hangman">
+      <div className="Hangman">
 
-        <div class="gallows">
-          <div class="upper">
-            <div class="beam one" data-part="2"></div>
-            <div class="beam two" data-part="4"></div>
-            <div class="beam three" data-part="3"></div>
-            <div class="beam four" data-part="5"></div>
+        <div className="gallows">
+          <div className="upper">
+            <div className="beam one" data-part="2"></div>
+            <div className="beam two" data-part="4"></div>
+            <div className="beam three" data-part="3"></div>
+            <div className="beam four" data-part="5"></div>
           </div>
-          <div class="beam floor" data-part="1"></div>
+          <div className="beam floor" data-part="1"></div>
         </div>
 
-        <div class="man">
-          <div class="head" data-part="6"></div>
-          <div class="body">
-            <div class="part left" data-part="8"></div>
-            <div class="part torso" data-part="7"></div>
-            <div class="part right" data-part="9"></div>
+        <div className="man">
+          <div className="head" data-part="6"></div>
+          <div className="body">
+            <div className="part left" data-part="8"></div>
+            <div className="part torso" data-part="7"></div>
+            <div className="part right" data-part="9"></div>
           </div>
-          <div class="legs">
-            <div class="part left" data-part="10"></div>
-            <div class="part right" data-part="11"></div>
+          <div className="legs">
+            <div className="part left" data-part="10"></div>
+            <div className="part right" data-part="11"></div>
           </div>
         </div>
 

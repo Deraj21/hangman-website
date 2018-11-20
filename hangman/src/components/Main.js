@@ -12,7 +12,7 @@ class Main extends Component {
     super();
 
     this.state = {
-      currentCategory: ''
+      currentCategory: 'Random Word'
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -66,15 +66,14 @@ class Main extends Component {
     let { givenName, familyName } = name;
     if (!givenName) {
       if (!nickname) {
-        givenName = "Michael"
+        givenName = ""
       } else {
         givenName = nickname;
       }
     }
     if (!familyName) {
-      familyName = "Jephandrews";
+      familyName = "";
     }
-    
 
     return (
       <div className="Main">
@@ -91,8 +90,8 @@ class Main extends Component {
               <p>{`${givenName} ${familyName}`}</p>
             </div>
             <div className="links">
-              <Link to={`/profile/${id}`}><a>View Profile</a></Link>
-              <Link to="/"><a>Logout</a></Link>
+              <Link to={`/profile/${id}`}><span>View Profile</span></Link>
+              <Link to="/"><span>Logout</span></Link>
             </div>
           </div>
         </div>
@@ -100,17 +99,19 @@ class Main extends Component {
         <div className="content">
 
           <div className="btn-box">
-            <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory === "select" ? "random" : currentCategory) }>Start New Game</button></Link>
+
+            <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory) }>Start New Game</button></Link>
+
             <select className="category-select" onChange={ e => this.handleChange(e.target.value) }>
-              <option value="select">      --Select a category-- </option>
-              <option value="SW people">   Star Wars- People     </option>
-              <option value="SW films">    Star Wars- Films      </option>
-              <option value="SW starships">Star Wars- Starships  </option>
-              <option value="SW vehicles"> Star Wars- Vehicles   </option>
-              <option value="SW species">  Star Wars- Species    </option>
-              <option value="SW planets">  Star Wars- Planets    </option>
-              <option value="pokemon">     Pokemon (gen 1-3)     </option>
-              <option value="random">      Random Dictionary Word</option>
+              <option value="Random Word">        --Select a category--</option>
+              <option value="Star Wars people">   Star Wars- People    </option>
+              <option value="Star Wars films">    Star Wars- Films     </option>
+              <option value="Star Wars starships">Star Wars- Starships </option>
+              <option value="Star Wars vehicles"> Star Wars- Vehicles  </option>
+              <option value="Star Wars species">  Star Wars- Species   </option>
+              <option value="Star Wars planets">  Star Wars- Planets   </option>
+              <option value="Pokemon">            Pokemon (gen 1-3)    </option>
+              <option value="Random Word">        Dictionary Word      </option>
             </select>
           </div>
 

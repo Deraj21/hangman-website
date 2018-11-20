@@ -7,6 +7,7 @@ import { updateScore } from '../ducks/reducer';
 import pokemon from './pokemon';
 import Hangman from './Hangman';
 import Keyboard from './Keyboard';
+import Redirect from 'react-router/Redirect';
 
 const wordsapiConfig = {
   baseURL: "https://wordsapiv1.p.mashape.com",
@@ -29,8 +30,7 @@ class Game extends Component {
       rightGuessedLetters: [],
       wrongGuessedLetters: [],
       userWon: false,
-      parts: 0,
-      hangmanSize: 100
+      parts: 0
     }
 
     this.handleGuess = this.handleGuess.bind(this);
@@ -51,7 +51,7 @@ class Game extends Component {
     let category = wordCategory.split(' ');
 
     // SWapi
-    if (category[0] === 'SW'){
+    if (category[0] === 'Star'){
       Axios.get(`/api/${category[1]}/`, swapiConfig)
         .then(response => {
           let item = this.randomFromList(response.data.results);
@@ -62,15 +62,17 @@ class Game extends Component {
           });
         })
         .catch( err => console.log(`swapi err: ${err.message}`) );
+
     // Pokemon
-    } else if (category[0] === "pokemon") {
+    } else if (category[0] === "Pokemon") {
       let newWord = this.randomFromList(pokemon).name;
       this.setState({
         word: newWord,
         board: this.makeBoard(newWord)
       });
+      
     // Wordsapi
-    } else if (category[0] === 'random') {
+    } else if (category[0] === 'Random Word') {
       Axios.get("/words?random=true", wordsapiConfig)
         .then( response => {
           let { word } = response.data;
@@ -84,7 +86,7 @@ class Game extends Component {
           console.log(`words err: ${err.message}`);
         });
     } else {
-      console.log('category not found', wordCategory, category);
+      console.log('no category found');
     }
 
   }
@@ -153,20 +155,17 @@ class Game extends Component {
 
   render() {
 
-    let { rightGuessedLetters, wrongGuessedLetters, board, guess, userWon, definition, parts, hangmanSize } = this.state;
+    let { rightGuessedLetters, wrongGuessedLetters, board, userWon, definition, parts } = this.state;
     let { wordCategory } = this.props;
-    let category = wordCategory.split(' ');
-
-    console.log(hangmanSize);
 
     return (
       <div className="Game">
-        <h1>StarWars Hangman!</h1>
+        <h1>Hangman!</h1>
 
         <div className="window">
           <div className="hangman-box"> <Hangman hangmanColor="black" backgroundColor="white" parts={parts} /> </div>
           <div className="right">
-            <p className="category">Category: {category[1]}</p>
+            <p className="category">Category: {wordCategory}</p>
             <p className="board">{board.join('')}</p>
             <Keyboard handleGuess={this.handleGuess} rightGuessed={rightGuessedLetters} wrongGuessed={wrongGuessedLetters}/>
             <p className="definition">{definition}</p>

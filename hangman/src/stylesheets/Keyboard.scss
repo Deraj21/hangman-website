@@ -5,15 +5,15 @@
   flex-wrap: wrap;
   justify-content: center;
 
-  width: 230px;
+  width: 278px;
 
   .key {
     background-color: $color2;
     font-family: $keyboard-font, 'Courier New', Courier;
     color: white;
     font-size: 18px;
-    padding: 5px;
-    margin: 1px;
+    padding: 7px;
+    margin: 2px;
     border: 1px solid black;
     border-radius: 3px;
     cursor: pointer;
