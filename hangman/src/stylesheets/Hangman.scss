@@ -4,6 +4,9 @@
   --hangman-color: black;
   --hangman-ratio: 1/3;
   --hangman-size: 100px;
+  @media screen and (max-width: 426px) {
+    --hangman-size: 70px;
+  }
 }
 
 

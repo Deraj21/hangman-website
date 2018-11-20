@@ -29,24 +29,24 @@ class Profile extends Component {
           <img src={`https://robohash.org/${givenName}${familyName}?set=set4`} alt="profile pic"/>
           <h1>{`${givenName} ${familyName}`}</h1>
         </div>
+
         <table>
           <tbody>
           <tr>
             <td>Score per Word</td>
-            <td>{word_score}</td>
-          </tr>
-          <tr>
             <td>Total Score</td>
-            <td>{total_score}</td>
+            <td>Games Played</td>
           </tr>
           <tr>
-            <td>Games Played</td>
+            <td>{total_score}</td>
+            <td>{word_score}</td>
             <td>{games_played}</td>
           </tr>
           </tbody>
         </table>
+
         <div className="bottom-button">
-          <Link to="/main"><button>back</button></Link>
+          <Link to="/main"><button>{"<< Back"}</button></Link>
         </div>
       </div>
     );
