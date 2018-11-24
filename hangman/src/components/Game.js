@@ -7,7 +7,6 @@ import { updateScore } from '../ducks/reducer';
 import pokemon from './pokemon';
 import Hangman from './Hangman';
 import Keyboard from './Keyboard';
-import Redirect from 'react-router/Redirect';
 
 const wordsapiConfig = {
   baseURL: "https://wordsapiv1.p.mashape.com",
@@ -37,25 +36,20 @@ class Game extends Component {
   }
 
   componentDidMount(){
-    let mql = window.matchMedia('screen and (min-width: 426px)');
-    mql.addListener(e => {
-      this.setState({ hangmanSize: 70 });
-      console.log('hello!');
-    });
-
     this.getWord();
   }
   
   getWord(){
     let { wordCategory } = this.props;
+    console.log(wordCategory);
     let category = wordCategory.split(' ');
 
     // SWapi
     if (category[0] === 'Star'){
-      Axios.get(`/api/${category[1]}/`, swapiConfig)
+      Axios.get(`/api/${category[2]}/`, swapiConfig)
         .then(response => {
           let item = this.randomFromList(response.data.results);
-          let newWord = (category[1] === 'films') ? item.title : item.name;
+          let newWord = (category[2] === 'films') ? item.title : item.name;
           this.setState({
             word: newWord,
             board: this.makeBoard(newWord)
@@ -72,7 +66,7 @@ class Game extends Component {
       });
       
     // Wordsapi
-    } else if (category[0] === 'Random Word') {
+    } else if (category[0] === 'Random') {
       Axios.get("/words?random=true", wordsapiConfig)
         .then( response => {
           let { word } = response.data;
