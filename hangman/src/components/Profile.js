@@ -33,8 +33,8 @@ class Profile extends Component {
         <table>
           <tbody>
           <tr>
-            <td>Score per Word</td>
             <td>Total Score</td>
+            <td>Score per Word</td>
             <td>Games Played</td>
           </tr>
           <tr>
