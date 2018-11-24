@@ -90,8 +90,8 @@ app.put('/api/score', controller.update_score);
 app.delete('/api/score/:id', controller.delete_score);
 
 // login
-const config = { successRedirect: `${IS_HOSTED ? HOSTED_APP : LOCAL_APP}/#/main`, failureRedirect: '/login', failureFlash: true };
-app.get('/login', passport.authenticate('auth0', config) );
+const loginConfig = { successRedirect: `${IS_HOSTED ? HOSTED_APP : LOCAL_APP}/#/main`, failureRedirect: '/login', failureFlash: true };
+app.get('/login', passport.authenticate('auth0', loginConfig) );
 app.get('/me', (req, res, next) => {
   if (req.user) {
     req.session.user = Object.assign({}, req.user);
@@ -102,7 +102,16 @@ app.get('/me', (req, res, next) => {
 });
 
 // logout here
-
+app.get('/logout', (req, res) =>{
+  req.session.destroy(err => {
+    if (err){
+      console.log(err.message);
+    } else {
+      console.log('user logged out');
+      res.redirect(`${IS_HOSTED ? HOSTED_APP : LOCAL_APP}/#/`);
+    }
+  });
+});
 
 // from https://medium.freecodecamp.org/i-built-this-now-what-how-to-deploy-a-react-app-on-a-digitalocean-droplet-662de0fe3f48
 const path = require('path');
