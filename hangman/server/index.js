@@ -6,8 +6,8 @@ const Auth0Strategy = require('passport-auth0');
 const session = require('express-session');
 const controller = require('./controller');
 require('dotenv').config();
-let { SECRET, PORT, CONNECTION_STRING, DOMAIN, CLIENT_ID, CLIENT_SECRET, LOCAL_APP, HOSTED_APP, IS_HOSTED } = process.env;
-IS_HOSTED = !!Number(IS_HOSTED);
+let { SECRET, PORT, CONNECTION_STRING, DOMAIN, CLIENT_ID, CLIENT_SECRET, LOCAL_APP, HOSTED_APP } = process.env;
+const IS_HOSTED = false;
 
 const app = express();
 app.use(bodyParser.json());
@@ -73,6 +73,9 @@ massive(CONNECTION_STRING)
     console.log("unable to connect to db")
   });
 
+// isHosted
+app.get('/api/app/isHosted', controller.get_is_hosted);
+
 // user
 app.get('/api/currentUser', controller.get_current_user);
 app.get('/api/user/:id', controller.get_user);
@@ -97,6 +100,9 @@ app.get('/me', (req, res, next) => {
     res.redirect('/login');
   }
 });
+
+// logout here
+
 
 // from https://medium.freecodecamp.org/i-built-this-now-what-how-to-deploy-a-react-app-on-a-digitalocean-droplet-662de0fe3f48
 const path = require('path');

@@ -8,16 +8,6 @@ import Hangman from './Hangman';
 
 class Main extends Component {
 
-  constructor(){
-    super();
-
-    this.state = {
-      currentCategory: 'Random Word'
-    }
-
-    this.handleChange = this.handleChange.bind(this);
-  }
-
   componentDidMount(){
     // get currentUser
     Axios.get('/api/currentUser')
@@ -47,7 +37,6 @@ class Main extends Component {
   
   render() {
     let { topScores, currentUser } = this.props;
-    let { currentCategory } = this.state;
 
     let scores = topScores.map((item, i) => {
       let { total_score, word_score, games_played, first_name, last_name } = item;
@@ -100,9 +89,9 @@ class Main extends Component {
 
           <div className="btn-box">
 
-            <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory) }>Start New Game</button></Link>
+            <Link to="/game"><button>Start New Game</button></Link>
 
-            <select className="category-select" onChange={ e => this.handleChange(e.target.value) }>
+            <select className="category-select" onChange={ e => this.props.updateWordCategory(e.target.value) }>
               <option value="Random Word">        --Select a category--</option>
               <option value="Star Wars people">   Star Wars- People    </option>
               <option value="Star Wars films">    Star Wars- Films     </option>
