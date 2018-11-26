@@ -47,8 +47,6 @@ class Main extends Component {
   render() {
     let { topScores, currentUser } = this.props;
 
-    console.log(`currentCategory: ${currentCategory}`);
-
     let scores = topScores.map((item, i) => {
       let { total_score, word_score, games_played, first_name, last_name } = item;
       return (
