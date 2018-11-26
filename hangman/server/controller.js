@@ -1,4 +1,10 @@
+const isHosted = false;
+
 module.exports = {
+  // GET isHosted
+  get_is_hosted: (req,res) => {
+    res.status(200).send(isHosted);
+  },
   // user POST "/api/user" makes new user and creates blank score for it; data passed into body
   add_user: (req, res, next) => {
     const db = req.app.get('db');

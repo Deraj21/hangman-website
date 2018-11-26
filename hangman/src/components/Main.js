@@ -3,20 +3,10 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import Axios from 'axios';
 import { connect } from 'react-redux';
-import { updateCurrentUser, updateTopScores, updateScore, updateWordCategory } from '../ducks/reducer';
+import { updateCurrentUser, updateTopScores, updateScore, updateWordCategory, updateRedirect } from '../ducks/reducer';
 import Hangman from './Hangman';
 
 class Main extends Component {
-
-  constructor(){
-    super();
-
-    this.state = {
-      currentCategory: 'Random Word'
-    }
-
-    this.handleChange = this.handleChange.bind(this);
-  }
 
   componentDidMount(){
     // get currentUser
@@ -24,14 +14,17 @@ class Main extends Component {
       .then( response => {
         this.props.updateCurrentUser(response.data);
       } )
-      .catch( err => console.log(`Axios err: ${err.message}`) );
+      .catch( err => {
+        console.log(`Axios err: ${err.message}`);
+        this.props.updateRedirect(true);
+      } );
 
     // get topScores
     Axios.get('/api/topscores/10')
       .then( response => {
         this.props.updateTopScores(response.data);
       })
-      .catch(err => console.log(`Axios err: ${err.message}`) );
+      .catch(err => console.log(err.message));
     
     // get currenUserScore
     Axios.get('api/score')
@@ -41,13 +34,18 @@ class Main extends Component {
       .catch( err => console.log(err.message));
   }
 
+  logout(){
+    Axios.get('/logout')
+      .then(() => console.log('logged out'))
+      .catch(err => console.log(err.message));
+  }
+
   handleChange(category){
     this.setState({ currentCategory: category });
   }
   
   render() {
     let { topScores, currentUser } = this.props;
-    let { currentCategory } = this.state;
 
     console.log(`currentCategory: ${currentCategory}`);
 
@@ -93,7 +91,7 @@ class Main extends Component {
             </div>
             <div className="links">
               <Link to={`/profile/${id}`}><span>View Profile</span></Link>
-              <Link to="/"><span>Logout</span></Link>
+              <Link to="/" onClick={() => this.logout()}><span>Logout</span></Link>
             </div>
           </div>
         </div>
@@ -102,9 +100,9 @@ class Main extends Component {
 
           <div className="btn-box">
 
-            <Link to="/game"><button onClick={ () => this.props.updateWordCategory(currentCategory) }>Start New Game</button></Link>
+            <Link to="/game"><button>Start New Game</button></Link>
 
-            <select className="category-select" onChange={ e => this.handleChange(e.target.value) }>
+            <select className="category-select" onChange={ e => this.props.updateWordCategory(e.target.value) }>
               <option value="Random Word">        --Select a category--</option>
               <option value="Star Wars people">   Star Wars- People    </option>
               <option value="Star Wars films">    Star Wars- Films     </option>
@@ -142,4 +140,4 @@ function mapStateToProps(state) {
   return { topScores, currentUser, wordCategory };
 }
 
-export default withRouter(connect( mapStateToProps, { updateCurrentUser, updateTopScores, updateScore, updateWordCategory } )( Main ));
+export default withRouter(connect( mapStateToProps, { updateCurrentUser, updateTopScores, updateScore, updateWordCategory, updateRedirect } )( Main ));
