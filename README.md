@@ -54,10 +54,3 @@
 			} else {
 			  - load data associated with id stored on the cookie
 			}
-
-	• MAP (post MVP)
-		○ ability to choose how many letters are in your word
-		○ Responsive Design
-		○ SMS bot to play hangman
-	• PUT	"/api/user/:id"	edits a user's info; data passed into body
-	DELETE	"/api/user/:id"	deletes a user of given id
