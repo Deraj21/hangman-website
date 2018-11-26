@@ -49,6 +49,8 @@ class Main extends Component {
     let { topScores, currentUser } = this.props;
     let { currentCategory } = this.state;
 
+    console.log(`currentCategory: ${currentCategory}`);
+
     let scores = topScores.map((item, i) => {
       let { total_score, word_score, games_played, first_name, last_name } = item;
       return (
