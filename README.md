@@ -5,16 +5,21 @@
 #### Mobile
 Login
 ![mobile login][mobile-login]
+
 Main
 ![mobile main][mobile-main]
+
 Game
 ![mobile game][mobile-game]
+
 Profile
 ![mobile profile][mobile-profile]
+
 
 #### Desktop
 Main
 ![desktop main][desktop-main]
+
 Game
 ![desktop game][desktop-game]
 
