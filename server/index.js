@@ -73,6 +73,20 @@ massive(CONNECTION_STRING)
     console.log("unable to connect to db")
   });
 
+// 'production' mode
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static( `${__dirname}/../build` ));
+  //
+  app.get('*', (req, res) => {
+    res.sendfile( `${__dirname}/../build/index.html` );
+  })
+}
+// 'building' mode
+app.get('*', (req, res) => {
+  res.sendFile( `${__dirname}/../public/index.html` );
+})
+
+
 // isHosted
 app.get('/api/app/isHosted', controller.get_is_hosted);
 
