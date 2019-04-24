@@ -18,7 +18,7 @@ export default class Login extends Component {
       <div className="Login">
         <h1>Welcome to Hangman!</h1>
         <Hangman hangmanColor="black" backgroundColor="#BCFCFF" parts="11" />
-          <button><a href={`http://${URL}:4000/login`}>Click Here to Login</a></button>
+          <button><a href={`${URL}/login`}>Click Here to Login</a></button>
       </div>
     );
   }
