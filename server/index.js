@@ -6,7 +6,7 @@ const Auth0Strategy = require('passport-auth0');
 const session = require('express-session');
 const controller = require('./controller');
 require('dotenv').config();
-let { SECRET, PORT, CONNECTION_STRING, DOMAIN, CLIENT_ID, CLIENT_SECRET, LOCAL_APP, HOSTED_APP } = process.env;
+let { SECRET, PORT, CONNECTION_STRING, DOMAIN, CLIENT_ID, CLIENT_SECRET, APP_BUILD, APP_LOCATION, PRODUCTION_LOCAL, PRODUCTION_HOSTED, BUILDING_LOCAL } = process.env;
 const IS_HOSTED = false;
 
 const app = express();
@@ -73,20 +73,6 @@ massive(CONNECTION_STRING)
     console.log("unable to connect to db")
   });
 
-// 'production' mode
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static( `${__dirname}/../build` ));
-  //
-  app.get('*', (req, res) => {
-    res.sendfile( `${__dirname}/../build/index.html` );
-  })
-}
-// 'building' mode
-app.get('*', (req, res) => {
-  res.sendFile( `${__dirname}/../public/index.html` );
-})
-
-
 // isHosted
 app.get('/api/app/isHosted', controller.get_is_hosted);
 
@@ -103,8 +89,11 @@ app.get('/api/score', controller.get_score);
 app.put('/api/score', controller.update_score);
 app.delete('/api/score/:id', controller.delete_score);
 
+let URL = (APP_BUILD === 'production') ? ((APP_LOCATION === 'local') ? PRODUCTION_LOCAL : PRODUCTION_HOSTED) : BUILDING_LOCAL
+console.log(URL);
+
 // login
-const loginConfig = { successRedirect: `${IS_HOSTED ? HOSTED_APP : LOCAL_APP}/#/main`, failureRedirect: '/login', failureFlash: true };
+const loginConfig = { successRedirect: `${URL}/#/main`, failureRedirect: '/login', failureFlash: true };
 app.get('/login', passport.authenticate('auth0', loginConfig) );
 app.get('/me', (req, res, next) => {
   if (req.user) {
@@ -122,16 +111,25 @@ app.get('/logout', (req, res) =>{
       console.log(err.message);
     } else {
       console.log('user logged out');
-      res.redirect(`${IS_HOSTED ? HOSTED_APP : LOCAL_APP}/#/`);
+      res.redirect(`${URL}/#/`);
     }
   });
 });
 
-// from https://medium.freecodecamp.org/i-built-this-now-what-how-to-deploy-a-react-app-on-a-digitalocean-droplet-662de0fe3f48
-const path = require('path');
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build/index.html'));
-})
+// from tutorial - serves up static react files
+if (process.env.APP_BUILD === 'production') { // 'production' mode
+  console.log('using build folder')
+  app.use(express.static( `${__dirname}/../build` ));
+  
+  app.get('*', (req, res) => {
+    res.sendfile( `${__dirname}/../build/index.html` );
+  })
+} else { // 'building' mode
+  app.get('*', (req, res) => {
+    console.log('using public folder')
+    res.sendFile( `${__dirname}/../public/index.html` );
+  })
+}
 
 const port = PORT || 4000;
 app.listen(port, () => console.log(`Server listening on port ${port}`));
