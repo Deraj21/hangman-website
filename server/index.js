@@ -105,7 +105,7 @@ app.get('/me', (req, res, next) => {
 });
 
 // logout here
-app.get('/logout', (req, res) =>{
+app.get('/logout', (req, res) => {
   req.session.destroy(err => {
     if (err){
       console.log(err.message);
